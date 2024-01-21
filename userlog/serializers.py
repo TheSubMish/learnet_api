@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import CustomUser
 from django.utils.encoding import smart_str,force_bytes,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
+from .models import CustomUser
 from .utills import Util
 
 class UserSignUpSerializer(serializers.ModelSerializer):
@@ -23,7 +23,6 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         return data
     
     def create(self,validated_data):
-        print(validated_data)
         return CustomUser.objects.create_user(**validated_data) 
     
 class UserLoginSerializer(serializers.ModelSerializer):

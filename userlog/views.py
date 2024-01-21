@@ -7,6 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from userlog.serializers import UserSignUpSerializer,UserLoginSerializer,UserProfileSerializer,UserChangePasswordSerializer,SendPasswordResetEmailSerializer,SendPasswordResetSerializer
 from userlog.renderers import UserRenderers
+from userlog.models import CustomUser
+from teacher.models import Teacher
+from student.models import Student
 
 # generate token manually
 def get_tokens_for_user(user):
@@ -24,6 +27,13 @@ class UserSignUpView(APIView):
         serializer = UserSignUpSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        # saves users as teacher if role if true otherwise as student
+        currentUser = CustomUser.objects.get(username=user.username)
+        if currentUser.role:
+            Teacher.objects.create(user=currentUser)
+        else:
+            Student.objects.create(user=currentUser)
+            
         token = get_tokens_for_user(user)
         login(request,user)
         return Response({'token':token,'msg':'SignUp Successful'}, status=status.HTTP_201_CREATED)

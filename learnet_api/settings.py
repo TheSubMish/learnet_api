@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'userlog',
+    'course',
+    'student',
+    'teacher',
+    'ckeditor',
 ]
 
 AUTH_USER_MODEL = 'userlog.CustomUser'
