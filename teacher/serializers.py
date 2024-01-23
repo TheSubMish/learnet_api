@@ -1,9 +1,11 @@
 from rest_framework import serializers
 
 from .models import Teacher
+from userlog.serializers import UserProfileSerializer
 
 class TeacherSerializer(serializers.ModelSerializer):
-
+    user = UserProfileSerializer()
+    
     class Meta:
         model = Teacher
         fields = '__all__'
