@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from course.models import Course
+from course.models import Course,Chapter
 
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
@@ -29,3 +29,8 @@ class CourseSerializers(serializers.ModelSerializer):
         instance.courseImage = validated_data.get('courseImage',instance.courseImage)
         instance.save()
         return instance
+    
+class ChapterSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Chapter
+        fields = ['id','course','chapterName','chapterBody']
