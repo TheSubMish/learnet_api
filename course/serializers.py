@@ -50,7 +50,7 @@ class ChapterSerializers(serializers.ModelSerializer):
         instance.save()
         return instance
     
-class TestSerializer(serializers.ModelSerializer):
+class TestSerializers(serializers.ModelSerializer):
     class Meta:
         model = Test
         fields = ['id','course','title','question','option1','option2','option3','option4','corAns']

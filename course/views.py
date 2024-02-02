@@ -6,7 +6,7 @@ from django.views.generic.edit import UpdateView
 
 from userlog.renderers import UserRenderers
 from teacher.permissions import TeacherPermission
-from course.serializers import CourseSerializers,ChapterSerializers,TestSerializer
+from course.serializers import CourseSerializers,ChapterSerializers,TestSerializers
 from course.models import Course,Chapter,Test
 
 class CreateCourseView(APIView):
@@ -34,7 +34,17 @@ class UpdateCourseView(APIView,UpdateView):
         serializer = self.serializer_class(course,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({'msg':'Data Updated Successfully'},status=status.HTTP_200_OK)
+        return Response({'msg':'Course Updated Successfully'},status=status.HTTP_200_OK)
+    
+class DeleteCourseView(APIView):
+    renderer_classes = [UserRenderers]
+    permission_classes = [TeacherPermission]
+    serializer_class = CourseSerializers
+
+    def delete(self,request,slug,format=None):
+        course = get_object_or_404(Course,slug=slug)
+        course.delete()
+        return Response({'msg':'Course Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)
     
 class CreateChapterView(APIView):
     renderer_classes = [UserRenderers]
@@ -64,10 +74,20 @@ class UpdateChapterView(APIView):
         serializer.save()
         return Response({'msg':'Chapter Updated Successfully'},status=status.HTTP_200_OK)
     
+class DeleteChapterView(APIView):
+    renderer_classes = [UserRenderers]
+    permission_classes = [TeacherPermission]
+    serializer_class = ChapterSerializers
+
+    def delete(self,request,slug,uid,format=None):
+        chapter = get_object_or_404(Chapter,id=uid)
+        chapter.delete()
+        return Response({'msg':'Chapter Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)
+    
 class CreateTestView(APIView):
     renderer_classes = [UserRenderers]
     permission_classes = [TeacherPermission]
-    serializer_class = TestSerializer
+    serializer_class = TestSerializers
 
     def post(self,request,slug,format=None):
         serializer = self.serializer_class(data=request.data)
@@ -78,7 +98,7 @@ class CreateTestView(APIView):
 class UpdateTestView(APIView):
     renderer_classes = [UserRenderers]
     permission_classes = [TeacherPermission]
-    serializer_class = TestSerializer
+    serializer_class = TestSerializers
 
     def get(self,request,slug,uid,format=None):
         test = get_object_or_404(Test,id=uid)
@@ -91,3 +111,13 @@ class UpdateTestView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'msg':'Test Updated Successfully'},status=status.HTTP_200_OK)
+    
+class DeleteTestView(APIView):
+    renderer_classes = [UserRenderers]
+    permission_classes = [TeacherPermission]
+    serializer_class = TestSerializers
+
+    def delete(self,request,slug,uid,format=None):
+        test = get_object_or_404(Test,id=uid)
+        test.delete()
+        return Response({'msg':'Test Deleted Successfully'},status=status.HTTP_204_NO_CONTENT)
