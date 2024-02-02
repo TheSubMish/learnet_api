@@ -44,6 +44,10 @@ class Chapter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self,*args,**kwargs):
+        self.chapterName = self.chapterName.lower()
+        super().save(*args,**kwargs)
+
     def __str__(self):
         return self.chapterName
     
@@ -58,6 +62,10 @@ class Test(models.Model):
     corAns = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self,*args,**kwargs):
+        self.title = self.title.lower()
+        super().save(*args,**kwargs)
 
     def __str__(self):
         return self.question

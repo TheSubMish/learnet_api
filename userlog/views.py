@@ -10,7 +10,6 @@ from userlog.serializers import UserSignUpSerializer,UserLoginSerializer,UserCha
 from userlog.renderers import UserRenderers
 from userlog.models import CustomUser
 from teacher.models import Teacher
-from teacher.serializers import TeacherSerializer
 from student.models import Student
 
 # generate token manually
