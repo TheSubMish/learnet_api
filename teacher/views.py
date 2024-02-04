@@ -17,7 +17,7 @@ class TeacherDashboard(APIView):
         serializer = TeacherSerializer(teacher)
         return Response(serializer.data,status=status.HTTP_200_OK)
 
-    def put(self,request,format=None):
+    def patch(self,request,format=None):
         teacher = get_object_or_404(Teacher, user=request.user)
         serializer = TeacherSerializer(teacher,data=request.data)
         serializer.is_valid(raise_exception=True)

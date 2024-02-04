@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from course.models import Course,Chapter,Test
 
-class CourseSerializers(serializers.ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id','courseTitle','courseDescrip','category','courseImage','slug','teacher']

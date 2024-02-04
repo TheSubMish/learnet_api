@@ -2,11 +2,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from django.views.generic.edit import UpdateView
 
 from userlog.renderers import UserRenderers
 from teacher.permissions import TeacherPermission
-from course.serializers import CourseSerializers,ChapterSerializers,TestSerializers
+from course.serializers import CourseSerializer,ChapterSerializers,TestSerializers
 from course.models import Course,Chapter,Test
 
 class CreateCourseView(APIView):
@@ -14,15 +13,15 @@ class CreateCourseView(APIView):
     permission_classes = [TeacherPermission]
 
     def post(self,request,format=None):
-        serializer = CourseSerializers(data=request.data)
+        serializer = CourseSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'msg':'Course Uploaded successfully'},status=status.HTTP_201_CREATED)
     
-class UpdateCourseView(APIView,UpdateView):
+class UpdateCourseView(APIView):
     renderer_classes = [UserRenderers]
     permission_classes = [TeacherPermission]
-    serializer_class = CourseSerializers
+    serializer_class = CourseSerializer
 
     def get(self,request,slug,format=None):
         course = get_object_or_404(Course,slug=slug)
@@ -39,7 +38,7 @@ class UpdateCourseView(APIView,UpdateView):
 class DeleteCourseView(APIView):
     renderer_classes = [UserRenderers]
     permission_classes = [TeacherPermission]
-    serializer_class = CourseSerializers
+    serializer_class = CourseSerializer
 
     def delete(self,request,slug,format=None):
         course = get_object_or_404(Course,slug=slug)
