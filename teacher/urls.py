@@ -3,5 +3,5 @@ from django.urls import path
 from teacher.views import TeacherDashboard
 
 urlpatterns = [
-    path('dashboard/',TeacherDashboard.as_view(),name='teacherDashboard')
+    path('dashboard/',TeacherDashboard.as_view(),name='Teacher_dashboard')
 ]

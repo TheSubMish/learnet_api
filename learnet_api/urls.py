@@ -14,5 +14,5 @@ urlpatterns = [
     path('api/user/',include('userlog.urls')),
     path('api/teacher/',include('teacher.urls')),
     path('api/course/',include('course.urls')),
-    # path('api/student/',include('student.urls')),
+    path('api/student/',include('student.urls')),
 ]

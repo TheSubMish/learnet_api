@@ -54,6 +54,7 @@ class Chapter(models.Model):
 class Test(models.Model):
     course = models.ForeignKey(Course,on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=100,null=True)
     question = models.CharField(max_length=255)
     option1 = models.CharField(max_length=255)
     option2 = models.CharField(max_length=255)
@@ -63,9 +64,10 @@ class Test(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         self.title = self.title.lower()
-        super().save(*args,**kwargs)
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.question
