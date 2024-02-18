@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from userlog.renderers import UserRenderers
 from teacher.serializers import TeacherSerializer
@@ -10,7 +11,7 @@ from teacher.permissions import TeacherPermission
 
 class TeacherDashboard(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     
     def get(self,request,format=None):
         teacher = get_object_or_404(Teacher, user=request.user)

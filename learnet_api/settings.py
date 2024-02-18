@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yw+05-7t8tgp1ug74y7n#r0h2q)hx_e@ew@!6-0r4qgw4g_$vm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','thesubmish.pythoneverywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition

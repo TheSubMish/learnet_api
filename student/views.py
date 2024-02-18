@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
@@ -12,7 +13,7 @@ from student.models import Student,Enroll
 from course.models import Course,Chapter,Test
 
 class StudentDashboardView(APIView):
-    permission_classes = [StudentPermission]
+    permission_classes = [IsAuthenticated,StudentPermission]
     renderer_classes = [UserRenderers]
     serializer_class = StudentDashboardSerializer
 
@@ -45,7 +46,7 @@ class SingleCourseView(APIView):
     
 class EnrollView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [StudentPermission]
+    permission_classes = [IsAuthenticated,StudentPermission]
     serializer_class = EnrollSerializer
 
     def get(self,request,slug,format=None):
@@ -58,7 +59,7 @@ class EnrollView(APIView):
 
 class ReadChapterTestView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [StudentPermission]
+    permission_classes = [IsAuthenticated,StudentPermission]
     serializer_class = ReadChapterTestSerializer
 
     def get(self,request,slug,format=None):
@@ -68,6 +69,7 @@ class ReadChapterTestView(APIView):
     
 class GiveTestView(APIView):
     renderer_classes = [UserRenderers]
+    permission_classes = [IsAuthenticated,StudentPermission]
     serializer_class = StudentMarkSerializer
 
     def post(self,request,slug,test_slug,format=None):

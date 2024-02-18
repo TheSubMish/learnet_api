@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from userlog.renderers import UserRenderers
 from teacher.permissions import TeacherPermission
@@ -10,7 +11,7 @@ from course.models import Course,Chapter,Test
 
 class CreateCourseView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
 
     def post(self,request,format=None):
         serializer = CourseSerializer(data=request.data)
@@ -20,7 +21,7 @@ class CreateCourseView(APIView):
     
 class UpdateCourseView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = CourseSerializer
 
     def get(self,request,slug,format=None):
@@ -37,7 +38,7 @@ class UpdateCourseView(APIView):
     
 class DeleteCourseView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = CourseSerializer
 
     def delete(self,request,slug,format=None):
@@ -47,7 +48,7 @@ class DeleteCourseView(APIView):
     
 class CreateChapterView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = ChapterSerializers
     
     def post(self,request,slug,format=None):
@@ -58,7 +59,7 @@ class CreateChapterView(APIView):
     
 class UpdateChapterView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = ChapterSerializers
 
     def get(self,request,slug,uid,format=None):
@@ -75,7 +76,7 @@ class UpdateChapterView(APIView):
     
 class DeleteChapterView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = ChapterSerializers
 
     def delete(self,request,slug,uid,format=None):
@@ -85,7 +86,7 @@ class DeleteChapterView(APIView):
     
 class CreateTestView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = TestSerializers
 
     def post(self,request,slug,format=None):
@@ -96,7 +97,7 @@ class CreateTestView(APIView):
     
 class UpdateTestView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = TestSerializers
 
     def get(self,request,slug,uid,format=None):
@@ -113,7 +114,7 @@ class UpdateTestView(APIView):
     
 class DeleteTestView(APIView):
     renderer_classes = [UserRenderers]
-    permission_classes = [TeacherPermission]
+    permission_classes = [IsAuthenticated,TeacherPermission]
     serializer_class = TestSerializers
 
     def delete(self,request,slug,uid,format=None):
